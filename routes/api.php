@@ -4,6 +4,7 @@ use App\Http\Controllers\ServerController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +23,9 @@ Route::resources([
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::prefix('docs')->group(function () {
+    Route::get('/', fn () => view('openapi', ['unpkg' => 'https://unpkg.com/swagger-ui-dist@3']));
+    Route::get('/swagger.json', fn () => Response::file(base_path('resources/docs/openapi.yaml')));
 });
