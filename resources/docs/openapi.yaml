@@ -1,0 +1,176 @@
+openapi: "3.0.2"
+
+info:
+  title: "Minecraft.is API"
+  version: "0.1"
+
+tags:
+  - name: Server
+
+paths:
+  /server:
+    get:
+      description: Returns paginated resource collection of servers
+      tags:
+        - Server
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerCollection'
+    post:
+      description: Create server
+      tags:
+        - Server
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Server'
+      responses:
+        200:
+          description: Newly created server
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+
+  /server/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+    get:
+      description: Returns server info
+      tags:
+        - Server
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+    put:
+      description: Update server
+      tags:
+        - Server
+      requestBody:
+        description: Server info
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Server'
+      responses:
+        200:
+          description: Server entity with updated info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+    delete:
+      description: Delete a server
+      tags:
+        - Server
+      responses:
+        204:
+          description: Server deleted
+
+components:
+  schemas:
+
+    Server:
+      type: object
+      properties:
+        id:
+          type: number
+        host:
+          type: string
+        port_server:
+          type: number
+        port_query:
+          type: number
+        deleted_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    ServerCollection:
+      allOf:
+        - $ref: '#/components/schemas/Collection'
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Server'
+
+    Collection:
+      type: object
+      properties:
+        links:
+          type: object
+          properties:
+            first:
+              type: string
+            last:
+              type: string
+            prev:
+              type: string
+            next:
+              type: string
+        meta:
+          type: object
+          properties:
+            current_page:
+              type: number
+            from:
+              type: number
+            last_page:
+              type: number
+            links:
+              type: array
+              items:
+                type: object
+                properties:
+                  url:
+                    type: string
+                  label:
+                    type: string
+                  active:
+                    type: boolean
+
+    ValidationError:
+      type: object
+      properties:
+        message:
+          type: string
+        errors:
+          type: object
+          additionalProperties:
+            type: string
+
+  responses:
+    NotFound: # 404
+      description: Resource doesn't exist
+    NotAuthorized: # 401
+      description: You're not logged in and this operation requires access check against a user
+    Forbidden: # 403
+      description: You're logged in, but this operation is forbidden
+    BadRequest: # 400
+      description: You did something wrong, either request body or parameters
+    UnprocessableEntity: # 422
+      description: Validation has failed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationError'
