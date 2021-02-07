@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Server;
+use App\Models\ServerStatus;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -11,11 +12,21 @@ use Tests\TestCase;
 
 class ServerTest extends TestCase
 {
-    public function test_factory()
+    public function test_model_factory()
     {
         $server = Server::factory()->create();
 
         $this->assertInstanceOf(Server::class, $server);
+    }
+
+    public function test_model_relationship_status()
+    {
+        $count = 5;
+        $server = Server::factory()
+            ->has(ServerStatus::factory()->count($count))
+            ->create();
+
+        $this->assertCount($count, $server->serverStatus);
     }
 
     public function test_api_index()

@@ -14,4 +14,9 @@ class ServerStatusPlayer extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function serverStatus()
+    {
+        return $this->belongsTo(ServerStatus::class);
+    }
 }

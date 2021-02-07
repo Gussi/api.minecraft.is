@@ -22,10 +22,7 @@ class ServerStatusPluginFactory extends Factory
      */
     public function definition()
     {
-        $server_status = ServerStatus::factory()->create();
-
         return [
-            'server_status_id'  => $server_status->id,
             'name'              => $this->faker->word,
         ];
     }

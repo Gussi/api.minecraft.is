@@ -16,4 +16,9 @@ class Server extends Model
         'host_server',
         'host_query',
     ];
+
+    public function serverStatus()
+    {
+        return $this->hasMany(ServerStatus::class);
+    }
 }

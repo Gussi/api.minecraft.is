@@ -22,12 +22,9 @@ class ServerStatusFactory extends Factory
      */
     public function definition()
     {
-        $server = Server::factory()->create();
-
         return [
-            'server_id'         => $server->id,
             'date'              => $this->faker->date,
-            'hostname'          => $server->host,
+            'hostname'          => $this->faker->domainName,
             'gametype'          => $this->faker->word,
             'version'           => '1.0.0',
             'map'               => $this->faker->word,

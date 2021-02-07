@@ -25,4 +25,19 @@ class ServerStatus extends Model
     protected $casts = [
         'date'      => 'datetime',
     ];
+
+    public function server()
+    {
+        return $this->belongsTo(Server::class);
+    }
+
+    public function serverStatusPlayer()
+    {
+        return $this->hasMany(ServerStatusPlayer::class);
+    }
+
+    public function serverStatusPlugin()
+    {
+        return $this->hasMany(ServerStatusPlugin::class);
+    }
 }
