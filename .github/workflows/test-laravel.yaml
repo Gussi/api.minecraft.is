@@ -24,7 +24,7 @@ jobs:
           php artisan key:generate
 
       - name: Run tests
-        run: ./vendor/bin/phpunit
+        run: ./vendor/bin/phpunit --testdox
         env:
           APP_ENV: testing
 
