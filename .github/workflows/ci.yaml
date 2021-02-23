@@ -4,14 +4,8 @@ on: [ push ]
 
 jobs:
   laravel:
-    name: Laravel (PHP ${{ matrix.php-versions }} on ${{ matrix.operating-system }})
-    runs-on: ${{ matrix.operating-system }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        operating-system: [ubuntu-latest]
-        php-versions: ['8.0']
+    name: Laravel test
+    runs-on: 'ubuntu-latest'
 
     steps:
       - name: Checkout
@@ -20,7 +14,7 @@ jobs:
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: '8.0'
           extensions: mbstring, dom, fileinfo
           coverage: xdebug
 
