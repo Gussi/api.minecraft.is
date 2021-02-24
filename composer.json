@@ -1,10 +1,9 @@
 {
-    "name": "laravel/laravel",
+    "name": "gussi/api-minecraft-is",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "api.minecraft.is",
     "keywords": [
-        "framework",
-        "laravel"
+        "minecraft"
     ],
     "license": "MIT",
     "require": {
