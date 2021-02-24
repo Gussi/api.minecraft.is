@@ -85,6 +85,25 @@ paths:
         204:
           description: Server deleted
 
+  /server/{id}/status:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+    get:
+      description: Get server status entries
+      tags:
+        - Server
+      responses:
+        200:
+          description: Successful request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServerStatusCollection'
+
 components:
   schemas:
 
@@ -100,15 +119,73 @@ components:
         port_query:
           type: number
 
+    ServerStatus:
+      type: object
+      properties:
+        hostname:
+          type: string
+        gametype:
+          type: string
+        version:
+          type: string
+        map:
+          type: string
+        players_current:
+          type: number
+        players_max:
+          type: number
+        ip:
+          type: string
+        software:
+          type: string
+        players:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServerStatusPlayer'
+        plugins:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServerStatusPlugin'
+
+    ServerStatusPlayer:
+      type: object
+      properties:
+        name:
+          type: string
+
+    ServerStatusPlugin:
+      type: object
+      properties:
+        name:
+          type: string
+
+    ServerInfo:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Server'
+      properties:
+        status:
+          $ref: '#/components/schemas/ServerStatus'
+
     ServerCollection:
+      type: object
       allOf:
         - $ref: '#/components/schemas/Collection'
-      type: object
       properties:
         data:
           type: array
           items:
             $ref: '#/components/schemas/Server'
+
+    ServerStatusCollection:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Collection'
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ServerStatus'
 
     Collection:
       type: object
