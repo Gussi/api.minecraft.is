@@ -4,13 +4,16 @@ info:
   title: "Minecraft.is API"
   version: "0.1"
 
+servers:
+  - url: https://api.minecraft.is/api
+    description: Production server
+
 tags:
   - name: Server
 
 paths:
   /server:
     get:
-      description: Returns paginated resource collection of servers
       tags:
         - Server
       responses:
