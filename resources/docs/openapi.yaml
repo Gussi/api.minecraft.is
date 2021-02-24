@@ -7,6 +7,8 @@ info:
 servers:
   - url: https://api.minecraft.is/api
     description: Production server
+  - url: http://127.0.0.1:8000/api
+    description: Development server
 
 tags:
   - name: Server
@@ -97,15 +99,6 @@ components:
           type: number
         port_query:
           type: number
-        deleted_at:
-          type: string
-          format: date-time
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
 
     ServerCollection:
       allOf:

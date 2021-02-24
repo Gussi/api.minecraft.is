@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Server;
-use App\Http\Resources\ServerCollection;
+use App\Http\Resources\ServerResource;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -17,7 +17,7 @@ class ServerController extends Controller
      */
     public function index()
     {
-        return new ServerCollection(Server::paginate());
+        return ServerResource::collection(Server::paginate());
     }
 
     /**
