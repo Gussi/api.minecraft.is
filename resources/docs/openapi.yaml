@@ -25,6 +25,9 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServerCollection'
+        401:
+          $ref: '#/components/responses/NotAuthorized'
+
     post:
       description: Create server
       tags:
@@ -41,6 +44,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Server'
+        401:
+          $ref: '#/components/responses/NotAuthorized'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
 
   /server/{id}:
     parameters:
@@ -60,6 +69,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Server'
+        404:
+          $ref: '#/components/responses/NotFound'
+        401:
+          $ref: '#/components/responses/NotAuthorized'
+        400:
+          $ref: '#/components/responses/BadRequest'
     put:
       description: Update server
       tags:
@@ -77,6 +92,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Server'
+        404:
+          $ref: '#/components/responses/NotFound'
+        401:
+          $ref: '#/components/responses/NotAuthorized'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        422:
+          $ref: '#/components/responses/UnprocessableEntity'
     delete:
       description: Delete a server
       tags:
@@ -84,6 +107,12 @@ paths:
       responses:
         204:
           description: Server deleted
+        404:
+          $ref: '#/components/responses/NotFound'
+        401:
+          $ref: '#/components/responses/NotAuthorized'
+        400:
+          $ref: '#/components/responses/BadRequest'
 
   /server/{id}/status:
     parameters:
@@ -103,6 +132,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ServerStatusCollection'
+        404:
+          $ref: '#/components/responses/NotFound'
+        401:
+          $ref: '#/components/responses/NotAuthorized'
+        400:
+          $ref: '#/components/responses/BadRequest'
 
 components:
   schemas:
