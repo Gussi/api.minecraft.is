@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ServerController;
+use App\Http\Controllers\ServerStatusController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -17,8 +18,9 @@ use Illuminate\Support\Facades\Response;
 |
 */
 
-Route::resources([
-    'server'    => ServerController::class,
+Route::apiResources([
+    'server'        => ServerController::class,
+    'server.status' => ServerStatusController::class,
 ]);
 
 Route::prefix('docs')->group(function () {

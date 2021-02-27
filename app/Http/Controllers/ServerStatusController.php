@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Server;
 use App\Models\ServerStatus;
+use App\Http\Resources\ServerStatusResource;
+
 use Illuminate\Http\Request;
 
 class ServerStatusController extends Controller
@@ -12,19 +15,9 @@ class ServerStatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Server $server)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return ServerStatusResource::collection($server->serverStatus()->paginate());
     }
 
     /**
@@ -35,7 +28,7 @@ class ServerStatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        abort(403);
     }
 
     /**
@@ -44,20 +37,9 @@ class ServerStatusController extends Controller
      * @param  \App\Models\ServerStatus  $serverStatus
      * @return \Illuminate\Http\Response
      */
-    public function show(ServerStatus $serverStatus)
+    public function show(Request $request, Server $server, ServerStatus $status)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\ServerStatus  $serverStatus
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(ServerStatus $serverStatus)
-    {
-        //
+        return ServerStatusResource::make($server->serverStatus()->findOrFail($status['id']));
     }
 
     /**
@@ -67,9 +49,9 @@ class ServerStatusController extends Controller
      * @param  \App\Models\ServerStatus  $serverStatus
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ServerStatus $serverStatus)
+    public function update(Request $request, Server $server, ServerStatus $status)
     {
-        //
+        abort(403);
     }
 
     /**
@@ -78,8 +60,8 @@ class ServerStatusController extends Controller
      * @param  \App\Models\ServerStatus  $serverStatus
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ServerStatus $serverStatus)
+    public function destroy(Request $request, Server $server, ServerStatus $status)
     {
-        //
+        abort(403);
     }
 }

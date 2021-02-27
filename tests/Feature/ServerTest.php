@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Server;
 use App\Models\ServerStatus;
+use App\Http\Resources\ServerResource;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -55,7 +56,7 @@ class ServerTest extends TestCase
         $server = Server::factory()->create();
 
         $this->get("/api/server/{$server->id}")
-            ->assertJson($server->toArray())
+            ->assertJson(ServerResource::make($server)->resolve())
             ->assertStatus(200);
     }
 

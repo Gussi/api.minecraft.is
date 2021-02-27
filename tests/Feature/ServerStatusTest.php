@@ -6,9 +6,11 @@ use App\Models\Server;
 use App\Models\ServerStatus;
 use App\Models\ServerStatusPlayer;
 use App\Models\ServerStatusPlugin;
+use App\Http\Resources\ServerStatusResource;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Request;
 
 use Tests\TestCase;
 
@@ -54,5 +56,59 @@ class ServerStatusTest extends TestCase
 
         $this->assertInstanceOf(ServerStatusPlugin::class, $server_status->serverStatusPlugin->first());
         $this->assertCount($count, $server_status->serverStatusPlugin);
+    }
+
+    public function test_api_index()
+    {
+        $count = 5;
+
+        $server = Server::factory()
+            ->has(ServerStatus::factory()->count($count))
+            ->create();
+
+        $this->getJson("/api/server/{$server['id']}/status")
+            ->assertJsonCount($count, 'data')
+            ->assertOk();
+    }
+
+    public function test_api_store()
+    {
+        $server = Server::factory()->create();
+        $status = ServerStatus::factory()
+            ->for($server)
+            ->make();
+
+        $this->postJson("/api/server/{$server['id']}/status", $status->toArray())
+            ->assertForbidden();
+    }
+
+    public function test_api_show()
+    {
+        $status = ServerStatus::factory()
+            ->for(Server::factory())
+            ->create();
+
+        $this->getJson("/api/server/{$status->server['id']}/status/{$status['id']}")
+            ->assertOk();
+    }
+
+    public function test_api_update()
+    {
+        $status = ServerStatus::factory()
+            ->for(Server::factory())
+            ->create();
+
+        $this->putJson("/api/server/{$status->server['id']}/status/{$status['id']}", ['name' => 'modified'])
+            ->assertForbidden();
+    }
+
+    public function test_api_destroy()
+    {
+        $status = ServerStatus::factory()
+            ->for(Server::factory())
+            ->create();
+
+        $this->deleteJson("/api/server/{$status->server['id']}/status/{$status['id']}")
+            ->assertForbidden();
     }
 }

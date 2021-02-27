@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ServerResource extends JsonResource
+class ServerStatusPluginResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,12 +14,8 @@ class ServerResource extends JsonResource
      */
     public function toArray($request)
     {
-
         return [
-            'id'            => $this->id,
-            'host'          => $this->host,
-            'port_server'   => $this->port_server,
-            'port_query'    => $this->port_query,
+            'name'      => $this->name,
         ];
     }
 }

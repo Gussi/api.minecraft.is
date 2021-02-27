@@ -39,7 +39,7 @@ class ServerController extends Controller
      */
     public function show(Server $server)
     {
-        return $server;
+        return ServerResource::make($server);
     }
 
     /**
