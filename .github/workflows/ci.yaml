@@ -40,5 +40,8 @@ jobs:
       - name: Clear Config
         run: php artisan config:clear
 
-      - name: Test with phpunit
+      - name: Test
+        run: php artisan test
+
+      - name: Test coverage report
         run: vendor/bin/phpunit --coverage-text
